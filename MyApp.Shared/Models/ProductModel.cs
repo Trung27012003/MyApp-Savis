@@ -11,7 +11,7 @@ namespace MyApp.Shared.Models
     public class ProductModel
     {
         [Key]
-        public Guid Id { get; set; }
+        public Guid Id { get; set;  
         public Guid? CategoryId { get; set; }
         public string? ProductName { get; set; }
         public int? AvailableQuantity { get; set; }

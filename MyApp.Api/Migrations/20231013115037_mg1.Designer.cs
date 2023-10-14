@@ -12,8 +12,8 @@ using MyApp.Api.Data;
 namespace MyApp.Api.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20231006084136_Migrations")]
-    partial class Migrations
+    [Migration("20231013115037_mg1")]
+    partial class mg1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,109 @@ namespace MyApp.Api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
 
             modelBuilder.Entity("MyApp.Shared.Models.CartItemModel", b =>
                 {
@@ -84,27 +187,27 @@ namespace MyApp.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ce40f6e8-967d-4a97-9ec1-774484e9169f"),
+                            Id = new Guid("ff9fc8ce-3e02-4af6-bad7-9d5b2a52a1c4"),
                             CategoryName = "Category 1"
                         },
                         new
                         {
-                            Id = new Guid("c2aded18-5c37-4fc6-bb15-1e106cecc5fc"),
+                            Id = new Guid("b58573fc-30f0-40da-a10a-3b442818cd35"),
                             CategoryName = "Category 2"
                         },
                         new
                         {
-                            Id = new Guid("0a9f62e3-3db1-40fe-9472-fdee2e18bf93"),
+                            Id = new Guid("624c6b5a-dd71-4233-bd5a-4eea042c7cb0"),
                             CategoryName = "Category 3"
                         },
                         new
                         {
-                            Id = new Guid("b22a5e46-530a-4f10-a03a-71057bce5fc1"),
+                            Id = new Guid("0f18a264-f418-4e85-becb-b9afb283e7fc"),
                             CategoryName = "Category 4"
                         },
                         new
                         {
-                            Id = new Guid("d38b94a4-c465-48ac-b62b-408be9ed5e6a"),
+                            Id = new Guid("c0bec17d-c110-455a-aec1-f09a29a1eb8f"),
                             CategoryName = "Category 5"
                         });
                 });
@@ -128,97 +231,97 @@ namespace MyApp.Api.Migrations
                     b.HasData(
                         new
                         {
-                            ColorId = new Guid("f0e5b4bf-7880-49c1-8fe7-12bc0faf83be"),
+                            ColorId = new Guid("33a7c2ba-62f9-4fc2-87e0-437e23a70dc6"),
                             ColorCode = "#000000",
                             ColorName = "Đen"
                         },
                         new
                         {
-                            ColorId = new Guid("dfe353a7-b618-44ac-8802-9db08d67f33a"),
+                            ColorId = new Guid("650c93ad-85bc-4fee-98b4-bf6589891eb3"),
                             ColorCode = "#FFFFFF",
                             ColorName = "Trắng"
                         },
                         new
                         {
-                            ColorId = new Guid("ebbea70c-6799-402d-880b-1caffc23477e"),
+                            ColorId = new Guid("b8ee00b4-c413-4b06-943a-e8dd677b2497"),
                             ColorCode = "#FF0000",
                             ColorName = "Đỏ"
                         },
                         new
                         {
-                            ColorId = new Guid("04f817f9-9dae-4580-9db7-27ad06bd6a78"),
+                            ColorId = new Guid("be826aae-578f-4a57-b6c8-6afd6eeef675"),
                             ColorCode = "#00FF00",
                             ColorName = "Xanh lá cây"
                         },
                         new
                         {
-                            ColorId = new Guid("6cfe98a3-f620-4704-9ceb-ad4317f197dd"),
+                            ColorId = new Guid("b881f580-9bae-4a8e-9bd7-bf7d93055a0a"),
                             ColorCode = "#0000FF",
                             ColorName = "Xanh dương"
                         },
                         new
                         {
-                            ColorId = new Guid("71a9be1f-dcac-4c55-9d5e-d947cca3cde0"),
+                            ColorId = new Guid("210e9eff-141b-47ed-aa5f-83741cccfa3a"),
                             ColorCode = "#FFFF00",
                             ColorName = "Vàng"
                         },
                         new
                         {
-                            ColorId = new Guid("a26fc2e2-2dfd-4fb4-8012-ee0eb22ade26"),
+                            ColorId = new Guid("dc94a391-d011-4fab-83de-88f296e7946c"),
                             ColorCode = "#FFA500",
                             ColorName = "Cam"
                         },
                         new
                         {
-                            ColorId = new Guid("655ee8c2-da4e-44db-aaac-7367aab5143e"),
+                            ColorId = new Guid("f99798ea-1d90-4589-89fd-e0e85fb7c9cb"),
                             ColorCode = "#800080",
                             ColorName = "Tím"
                         },
                         new
                         {
-                            ColorId = new Guid("3d2a0afb-62a6-421b-aded-a3aebc2f7a07"),
+                            ColorId = new Guid("3e6ca4b6-3236-4cec-84a6-6696a9902cb6"),
                             ColorCode = "#FFC0CB",
                             ColorName = "Hồng"
                         },
                         new
                         {
-                            ColorId = new Guid("1ce7434f-08ca-4d43-bd9f-839105ce4bb8"),
+                            ColorId = new Guid("a2312d1e-daa7-4a83-8917-0f15e193e17b"),
                             ColorCode = "#808080",
                             ColorName = "Xám"
                         },
                         new
                         {
-                            ColorId = new Guid("69374fbf-f777-473c-946a-2b0eac2e5846"),
+                            ColorId = new Guid("0f02b105-68ca-45e9-ae63-cc58c292b89f"),
                             ColorCode = "#A52A2A",
                             ColorName = "Nâu"
                         },
                         new
                         {
-                            ColorId = new Guid("db264bc1-4386-47e9-8cd6-e9dde56c4f24"),
+                            ColorId = new Guid("a9ce9bf3-caf2-46c1-a216-831dca72d275"),
                             ColorCode = "#000080",
                             ColorName = "Xanh lam"
                         },
                         new
                         {
-                            ColorId = new Guid("8916a404-b197-4120-9139-d59894cbf159"),
+                            ColorId = new Guid("bffee647-8079-468c-965d-8a0e6817f584"),
                             ColorCode = "#00BFFF",
                             ColorName = "Xanh da trời"
                         },
                         new
                         {
-                            ColorId = new Guid("5f651770-1874-48ff-a18e-ed9a3e99f8a5"),
+                            ColorId = new Guid("77d28310-f0ff-4137-a4d2-451d19143b92"),
                             ColorCode = "#FFDAB9",
                             ColorName = "Hồng phấn"
                         },
                         new
                         {
-                            ColorId = new Guid("679319f7-ed1a-464e-a278-c21a2edc6dee"),
+                            ColorId = new Guid("96626759-1e7a-42df-bfb3-a5e744b4bcd6"),
                             ColorCode = "#C0C0C0",
                             ColorName = "Xám tro"
                         },
                         new
                         {
-                            ColorId = new Guid("5c0a8818-19a6-411d-a146-dc8fbdbf311c"),
+                            ColorId = new Guid("71fbe411-7c96-4ec3-8bae-ea7fe70d228b"),
                             ColorCode = "#C0C0C0",
                             ColorName = "Bạc"
                         });
@@ -337,42 +440,42 @@ namespace MyApp.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("494a1fc6-4be6-4dbf-b445-bb92d9d5c285"),
+                            Id = new Guid("e530e531-a0b2-401d-a30a-04d2d93f2105"),
                             OrderStatusName = "Đang được xử    lý"
                         },
                         new
                         {
-                            Id = new Guid("b0510af1-c9bf-453d-beac-6a5eed5bb124"),
+                            Id = new Guid("81b6f0e4-1c7b-4ea4-9c7d-d638ef3f4933"),
                             OrderStatusName = "Chờ lấy hàng"
                         },
                         new
                         {
-                            Id = new Guid("cd642f4d-6959-4521-9fde-38952d3a4dfc"),
+                            Id = new Guid("b4f73133-a223-482a-96e3-041d4c0c4e7d"),
                             OrderStatusName = "Đang giao hàng"
                         },
                         new
                         {
-                            Id = new Guid("7f463a82-ceaa-4860-af5a-5271e643869f"),
+                            Id = new Guid("94c5f952-fbc2-4666-976c-9f3370de4074"),
                             OrderStatusName = "Giao hàng thành công"
                         },
                         new
                         {
-                            Id = new Guid("7647b648-33c1-4f32-92ee-d32f87edab27"),
+                            Id = new Guid("e7c087af-40b9-4572-842e-f1d3f56313f6"),
                             OrderStatusName = "Giao hàng không thành công"
                         },
                         new
                         {
-                            Id = new Guid("c59097eb-4c1a-435f-91aa-99be4dcfaaf8"),
+                            Id = new Guid("371b5540-3568-48e9-a42e-51a3b9ef36fc"),
                             OrderStatusName = "Hủy đơn"
                         },
                         new
                         {
-                            Id = new Guid("6879200b-f981-4af9-9f09-923f2eb67b9b"),
+                            Id = new Guid("8b4da449-a0fb-4ccb-94e6-552a566c27ce"),
                             OrderStatusName = "Yêu cầu trả hàng"
                         },
                         new
                         {
-                            Id = new Guid("5b248dbf-96cd-4c70-af9a-2b5e40d4e313"),
+                            Id = new Guid("f966ffa9-8138-48e9-a5e1-0302a8cfd31c"),
                             OrderStatusName = "Chấp nhận trả hàng"
                         });
                 });
@@ -394,12 +497,12 @@ namespace MyApp.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1ed303c0-9290-4c2a-ac5e-ac4cb809d5a0"),
+                            Id = new Guid("4d5702cb-533b-450a-ad85-d57d13543254"),
                             PaymentName = "Thanh toán khi nhận hàng"
                         },
                         new
                         {
-                            Id = new Guid("c4ef98c5-b7c9-4c0f-a2a8-b2e3fa5c652f"),
+                            Id = new Guid("3877ac86-8902-4d9e-a3cc-6851e0298edd"),
                             PaymentName = "Thanh toán Online"
                         });
                 });
@@ -542,37 +645,45 @@ namespace MyApp.Api.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d0465de7-fb3d-44bb-b900-9f5e986b0209"),
-                            ConcurrencyStamp = "e45071cb-9768-48b3-b392-b0c8bc28376d",
+                            Id = new Guid("b2fb1de6-fda6-4aab-8cac-4f3383d8c3bc"),
+                            ConcurrencyStamp = "152d93f2-5a79-413d-9d48-2884133070c0",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("868fdcd4-c6ca-4295-8ae6-633319a3cc35"),
-                            ConcurrencyStamp = "ff97f592-1344-45d2-94a8-9f319006afa7",
+                            Id = new Guid("1d967170-a681-4abd-918d-45ffd56588dd"),
+                            ConcurrencyStamp = "54eed1b6-f819-4714-a92f-f3057c16c86b",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = new Guid("1fe6251f-a3f8-4a8f-97d7-124c37391e47"),
-                            ConcurrencyStamp = "8845f9f9-6129-4a76-ba0e-e550fd81720d",
+                            Id = new Guid("14e1c343-32c4-4c07-8c51-0f241c731dcf"),
+                            ConcurrencyStamp = "376cd97f-0be5-4525-8b97-65e38a3f8f3c",
                             Name = "Guest",
                             NormalizedName = "GUEST"
                         });
@@ -592,13 +703,15 @@ namespace MyApp.Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -614,10 +727,12 @@ namespace MyApp.Api.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -642,11 +757,20 @@ namespace MyApp.Api.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("MyApp.Shared.Models.UserVoucherModel", b =>
@@ -752,17 +876,17 @@ namespace MyApp.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("59c9c896-905f-444a-91f0-cd85202f1608"),
+                            Id = new Guid("63b3fbb0-c353-4bcc-bf90-4544c9abd1e7"),
                             Name = "Used"
                         },
                         new
                         {
-                            Id = new Guid("daccaac4-b089-4067-94c4-fe50b5c31394"),
+                            Id = new Guid("3955fc02-0304-4049-ade0-d5f6d8ba7688"),
                             Name = "Active"
                         },
                         new
                         {
-                            Id = new Guid("4af33c31-fa9c-499d-991f-d6c497357f2a"),
+                            Id = new Guid("f051afbc-22f5-4d9b-b0ad-f6b9ae0d530f"),
                             Name = "Expired"
                         });
                 });
@@ -780,6 +904,57 @@ namespace MyApp.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("VoucherType");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+                {
+                    b.HasOne("MyApp.Shared.Models.RoleModel", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+                {
+                    b.HasOne("MyApp.Shared.Models.UserModel", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+                {
+                    b.HasOne("MyApp.Shared.Models.UserModel", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+                {
+                    b.HasOne("MyApp.Shared.Models.RoleModel", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MyApp.Shared.Models.UserModel", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+                {
+                    b.HasOne("MyApp.Shared.Models.UserModel", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MyApp.Shared.Models.CartItemModel", b =>

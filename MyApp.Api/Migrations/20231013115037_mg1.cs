@@ -5,10 +5,54 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MyApp.Api.Migrations
 {
-    public partial class Migrations : Migration
+    public partial class mg1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Points = table.Column<int>(type: "int", nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProfilePictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Category",
                 columns: table => new
@@ -59,50 +103,6 @@ namespace MyApp.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Roles",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Points = table.Column<int>(type: "int", nullable: true),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProfilePictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "VoucherStatus",
                 columns: table => new
                 {
@@ -127,6 +127,152 @@ namespace MyApp.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cart",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cart", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cart_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Posts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Posts_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -148,46 +294,6 @@ namespace MyApp.Api.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Category",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Cart",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cart", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cart_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Posts",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Posts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Posts_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -277,6 +383,11 @@ namespace MyApp.Api.Migrations
                 {
                     table.PrimaryKey("PK_Order", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Order_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_Order_OrderStatus_OrderStatusId",
                         column: x => x.OrderStatusId,
                         principalTable: "OrderStatus",
@@ -285,11 +396,6 @@ namespace MyApp.Api.Migrations
                         name: "FK_Order_Payments_PaymentId",
                         column: x => x.PaymentId,
                         principalTable: "Payments",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Order_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Order_VoucherModel_VoucherId",
@@ -311,9 +417,9 @@ namespace MyApp.Api.Migrations
                 {
                     table.PrimaryKey("PK_UserVouche", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserVouche_Users_UserId",
+                        name: "FK_UserVouche_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -420,15 +526,25 @@ namespace MyApp.Api.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { new Guid("14e1c343-32c4-4c07-8c51-0f241c731dcf"), "376cd97f-0be5-4525-8b97-65e38a3f8f3c", "Guest", "GUEST" },
+                    { new Guid("1d967170-a681-4abd-918d-45ffd56588dd"), "54eed1b6-f819-4714-a92f-f3057c16c86b", "User", "USER" },
+                    { new Guid("b2fb1de6-fda6-4aab-8cac-4f3383d8c3bc"), "152d93f2-5a79-413d-9d48-2884133070c0", "Admin", "ADMIN" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Category",
                 columns: new[] { "Id", "CategoryName" },
                 values: new object[,]
                 {
-                    { new Guid("0a9f62e3-3db1-40fe-9472-fdee2e18bf93"), "Category 3" },
-                    { new Guid("b22a5e46-530a-4f10-a03a-71057bce5fc1"), "Category 4" },
-                    { new Guid("c2aded18-5c37-4fc6-bb15-1e106cecc5fc"), "Category 2" },
-                    { new Guid("ce40f6e8-967d-4a97-9ec1-774484e9169f"), "Category 1" },
-                    { new Guid("d38b94a4-c465-48ac-b62b-408be9ed5e6a"), "Category 5" }
+                    { new Guid("0f18a264-f418-4e85-becb-b9afb283e7fc"), "Category 4" },
+                    { new Guid("624c6b5a-dd71-4233-bd5a-4eea042c7cb0"), "Category 3" },
+                    { new Guid("b58573fc-30f0-40da-a10a-3b442818cd35"), "Category 2" },
+                    { new Guid("c0bec17d-c110-455a-aec1-f09a29a1eb8f"), "Category 5" },
+                    { new Guid("ff9fc8ce-3e02-4af6-bad7-9d5b2a52a1c4"), "Category 1" }
                 });
 
             migrationBuilder.InsertData(
@@ -436,22 +552,22 @@ namespace MyApp.Api.Migrations
                 columns: new[] { "ColorId", "ColorCode", "ColorName" },
                 values: new object[,]
                 {
-                    { new Guid("04f817f9-9dae-4580-9db7-27ad06bd6a78"), "#00FF00", "Xanh lá cây" },
-                    { new Guid("1ce7434f-08ca-4d43-bd9f-839105ce4bb8"), "#808080", "Xám" },
-                    { new Guid("3d2a0afb-62a6-421b-aded-a3aebc2f7a07"), "#FFC0CB", "Hồng" },
-                    { new Guid("5c0a8818-19a6-411d-a146-dc8fbdbf311c"), "#C0C0C0", "Bạc" },
-                    { new Guid("5f651770-1874-48ff-a18e-ed9a3e99f8a5"), "#FFDAB9", "Hồng phấn" },
-                    { new Guid("655ee8c2-da4e-44db-aaac-7367aab5143e"), "#800080", "Tím" },
-                    { new Guid("679319f7-ed1a-464e-a278-c21a2edc6dee"), "#C0C0C0", "Xám tro" },
-                    { new Guid("69374fbf-f777-473c-946a-2b0eac2e5846"), "#A52A2A", "Nâu" },
-                    { new Guid("6cfe98a3-f620-4704-9ceb-ad4317f197dd"), "#0000FF", "Xanh dương" },
-                    { new Guid("71a9be1f-dcac-4c55-9d5e-d947cca3cde0"), "#FFFF00", "Vàng" },
-                    { new Guid("8916a404-b197-4120-9139-d59894cbf159"), "#00BFFF", "Xanh da trời" },
-                    { new Guid("a26fc2e2-2dfd-4fb4-8012-ee0eb22ade26"), "#FFA500", "Cam" },
-                    { new Guid("db264bc1-4386-47e9-8cd6-e9dde56c4f24"), "#000080", "Xanh lam" },
-                    { new Guid("dfe353a7-b618-44ac-8802-9db08d67f33a"), "#FFFFFF", "Trắng" },
-                    { new Guid("ebbea70c-6799-402d-880b-1caffc23477e"), "#FF0000", "Đỏ" },
-                    { new Guid("f0e5b4bf-7880-49c1-8fe7-12bc0faf83be"), "#000000", "Đen" }
+                    { new Guid("0f02b105-68ca-45e9-ae63-cc58c292b89f"), "#A52A2A", "Nâu" },
+                    { new Guid("210e9eff-141b-47ed-aa5f-83741cccfa3a"), "#FFFF00", "Vàng" },
+                    { new Guid("33a7c2ba-62f9-4fc2-87e0-437e23a70dc6"), "#000000", "Đen" },
+                    { new Guid("3e6ca4b6-3236-4cec-84a6-6696a9902cb6"), "#FFC0CB", "Hồng" },
+                    { new Guid("650c93ad-85bc-4fee-98b4-bf6589891eb3"), "#FFFFFF", "Trắng" },
+                    { new Guid("71fbe411-7c96-4ec3-8bae-ea7fe70d228b"), "#C0C0C0", "Bạc" },
+                    { new Guid("77d28310-f0ff-4137-a4d2-451d19143b92"), "#FFDAB9", "Hồng phấn" },
+                    { new Guid("96626759-1e7a-42df-bfb3-a5e744b4bcd6"), "#C0C0C0", "Xám tro" },
+                    { new Guid("a2312d1e-daa7-4a83-8917-0f15e193e17b"), "#808080", "Xám" },
+                    { new Guid("a9ce9bf3-caf2-46c1-a216-831dca72d275"), "#000080", "Xanh lam" },
+                    { new Guid("b881f580-9bae-4a8e-9bd7-bf7d93055a0a"), "#0000FF", "Xanh dương" },
+                    { new Guid("b8ee00b4-c413-4b06-943a-e8dd677b2497"), "#FF0000", "Đỏ" },
+                    { new Guid("be826aae-578f-4a57-b6c8-6afd6eeef675"), "#00FF00", "Xanh lá cây" },
+                    { new Guid("bffee647-8079-468c-965d-8a0e6817f584"), "#00BFFF", "Xanh da trời" },
+                    { new Guid("dc94a391-d011-4fab-83de-88f296e7946c"), "#FFA500", "Cam" },
+                    { new Guid("f99798ea-1d90-4589-89fd-e0e85fb7c9cb"), "#800080", "Tím" }
                 });
 
             migrationBuilder.InsertData(
@@ -459,14 +575,14 @@ namespace MyApp.Api.Migrations
                 columns: new[] { "Id", "OrderStatusName" },
                 values: new object[,]
                 {
-                    { new Guid("494a1fc6-4be6-4dbf-b445-bb92d9d5c285"), "Đang được xử    lý" },
-                    { new Guid("5b248dbf-96cd-4c70-af9a-2b5e40d4e313"), "Chấp nhận trả hàng" },
-                    { new Guid("6879200b-f981-4af9-9f09-923f2eb67b9b"), "Yêu cầu trả hàng" },
-                    { new Guid("7647b648-33c1-4f32-92ee-d32f87edab27"), "Giao hàng không thành công" },
-                    { new Guid("7f463a82-ceaa-4860-af5a-5271e643869f"), "Giao hàng thành công" },
-                    { new Guid("b0510af1-c9bf-453d-beac-6a5eed5bb124"), "Chờ lấy hàng" },
-                    { new Guid("c59097eb-4c1a-435f-91aa-99be4dcfaaf8"), "Hủy đơn" },
-                    { new Guid("cd642f4d-6959-4521-9fde-38952d3a4dfc"), "Đang giao hàng" }
+                    { new Guid("371b5540-3568-48e9-a42e-51a3b9ef36fc"), "Hủy đơn" },
+                    { new Guid("81b6f0e4-1c7b-4ea4-9c7d-d638ef3f4933"), "Chờ lấy hàng" },
+                    { new Guid("8b4da449-a0fb-4ccb-94e6-552a566c27ce"), "Yêu cầu trả hàng" },
+                    { new Guid("94c5f952-fbc2-4666-976c-9f3370de4074"), "Giao hàng thành công" },
+                    { new Guid("b4f73133-a223-482a-96e3-041d4c0c4e7d"), "Đang giao hàng" },
+                    { new Guid("e530e531-a0b2-401d-a30a-04d2d93f2105"), "Đang được xử    lý" },
+                    { new Guid("e7c087af-40b9-4572-842e-f1d3f56313f6"), "Giao hàng không thành công" },
+                    { new Guid("f966ffa9-8138-48e9-a5e1-0302a8cfd31c"), "Chấp nhận trả hàng" }
                 });
 
             migrationBuilder.InsertData(
@@ -474,18 +590,8 @@ namespace MyApp.Api.Migrations
                 columns: new[] { "Id", "PaymentName" },
                 values: new object[,]
                 {
-                    { new Guid("1ed303c0-9290-4c2a-ac5e-ac4cb809d5a0"), "Thanh toán khi nhận hàng" },
-                    { new Guid("c4ef98c5-b7c9-4c0f-a2a8-b2e3fa5c652f"), "Thanh toán Online" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Roles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { new Guid("1fe6251f-a3f8-4a8f-97d7-124c37391e47"), "8845f9f9-6129-4a76-ba0e-e550fd81720d", "Guest", "GUEST" },
-                    { new Guid("868fdcd4-c6ca-4295-8ae6-633319a3cc35"), "ff97f592-1344-45d2-94a8-9f319006afa7", "User", "USER" },
-                    { new Guid("d0465de7-fb3d-44bb-b900-9f5e986b0209"), "e45071cb-9768-48b3-b392-b0c8bc28376d", "Admin", "ADMIN" }
+                    { new Guid("3877ac86-8902-4d9e-a3cc-6851e0298edd"), "Thanh toán Online" },
+                    { new Guid("4d5702cb-533b-450a-ad85-d57d13543254"), "Thanh toán khi nhận hàng" }
                 });
 
             migrationBuilder.InsertData(
@@ -493,10 +599,49 @@ namespace MyApp.Api.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("4af33c31-fa9c-499d-991f-d6c497357f2a"), "Expired" },
-                    { new Guid("59c9c896-905f-444a-91f0-cd85202f1608"), "Used" },
-                    { new Guid("daccaac4-b089-4067-94c4-fe50b5c31394"), "Active" }
+                    { new Guid("3955fc02-0304-4049-ade0-d5f6d8ba7688"), "Active" },
+                    { new Guid("63b3fbb0-c353-4bcc-bf90-4544c9abd1e7"), "Used" },
+                    { new Guid("f051afbc-22f5-4d9b-b0ad-f6b9ae0d530f"), "Expired" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cart_UserId",
@@ -602,6 +747,21 @@ namespace MyApp.Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
                 name: "CartItems");
 
             migrationBuilder.DropTable(
@@ -614,13 +774,13 @@ namespace MyApp.Api.Migrations
                 name: "ProductImages");
 
             migrationBuilder.DropTable(
-                name: "Roles");
-
-            migrationBuilder.DropTable(
                 name: "UserVouche");
 
             migrationBuilder.DropTable(
                 name: "VoucherProduct");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Cart");
@@ -632,13 +792,13 @@ namespace MyApp.Api.Migrations
                 name: "ProductDetails");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "OrderStatus");
 
             migrationBuilder.DropTable(
                 name: "Payments");
-
-            migrationBuilder.DropTable(
-                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "VoucherModel");

@@ -1,15 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MyApp.Shared.Models;
+using System.Data;
 
 namespace MyApp.Api.Data
 {
-    public class MyDbContext : DbContext
+    public class MyDbContext : IdentityDbContext<UserModel, RoleModel, Guid>
     {
-        public MyDbContext(DbContextOptions options) : base(options)
+        public MyDbContext()
         {
         }
 
-        protected MyDbContext()
+        public MyDbContext(DbContextOptions options) : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder builder)
@@ -82,8 +84,6 @@ namespace MyApp.Api.Data
         public DbSet<ProductDetailModel> ProductDetails { get; set; }
         public DbSet<ProductImageModel> ProductImages { get; set; }
         public DbSet<ProductModel> Products { get; set; }
-        public DbSet<RoleModel> Roles { get; set; }
-        public DbSet<UserModel> Users { get; set; }
         public DbSet<UserVoucherModel> UserVouche { get; set; }
         public DbSet<VoucherModel> VoucherModel { get; set; }
         public DbSet<VoucherProductModel> VoucherProduct { get; set; }

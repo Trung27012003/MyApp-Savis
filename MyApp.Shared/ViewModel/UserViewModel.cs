@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyApp.Shared.Models
+namespace MyApp.Shared.ViewModel
 {
-    public class UserModel : IdentityUser<Guid>
+    public class UserViewModel
     {
         public DateTime? DateOfBirth { get; set; }
         public int? Points { get; set; }
@@ -17,5 +16,6 @@ namespace MyApp.Shared.Models
         public string Address { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+        public string Password { get; set; }
     }
 }

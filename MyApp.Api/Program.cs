@@ -2,10 +2,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using MyApp.Api.Data;
-using MyApp.Shared.Models;
-using System.Data;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text;
+using MyApp.Api.Data;
+using MyApp.Api.IServices;
+using MyApp.Api.Services;
+using MyApp.Shared.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +29,40 @@ builder.Services.AddDbContext<MyDbContext>(options =>
 builder.Services.AddIdentity<UserModel, RoleModel>()
     .AddEntityFrameworkStores<MyDbContext>()
     .AddDefaultTokenProviders();
+// add dependency injection
+
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<ICartItemService, CartItemService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IColorService, ColorService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderItemService, OrderItemService>();
+builder.Services.AddScoped<IOrderStatusService, OrderStatusService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductDetailService, ProductDetailService>();
+builder.Services.AddScoped<IProductImageService, ProductImageService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserVoucherService, UserVoucherService>();
+builder.Services.AddScoped<IVoucherService, VoucherService>();
+builder.Services.AddScoped<IVoucherStatusService, VoucherStatusService>();
+builder.Services.AddScoped<IVoucherProductService, VoucherProductService>();
+
+
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 // Add authentication
 builder.Services.AddAuthentication(options =>
 {
